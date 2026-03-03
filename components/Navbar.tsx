@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "/#beneficios", label: "Beneficios" },
-  { href: "/#como-funciona", label: "Cómo funciona" },
-  { href: "/#ia", label: "IA por voz" },
+  { href: "/hospitales", label: "Hospitales" },
+  { href: "/instituciones", label: "Instituciones" },
+  { href: "/negocios", label: "Negocios" },
   { href: "/#cta", label: "Pedir demo" },
 ];
 
@@ -22,7 +22,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Cierro el menú si cambia el tamaño (por ejemplo pasás a desktop)
   useEffect(() => {
     const onResize = () => {
       if (window.innerWidth > 860) setOpen(false);
@@ -43,14 +42,13 @@ export default function Navbar() {
             priority
             className="nav-logo"
           />
-          <span className="nav-name">MYSYN</span>
         </Link>
 
         <nav className="nav-links" aria-label="Navegación principal">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="nav-link">
+            <Link key={l.href} href={l.href} className="nav-link">
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -66,7 +64,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Siempre renderizado: se abre/cierra por CSS (mejor para que no “no aparezca”) */}
       <div
         id="nav-mobile"
         className={`nav-mobile ${open ? "is-open" : ""}`}
@@ -74,15 +71,22 @@ export default function Navbar() {
       >
         <div className="container-mysyn nav-mobile-inner">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="nav-link nav-link--mobile"
               onClick={() => setOpen(false)}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
+          <Link
+            href="/#segmentos"
+            className="nav-link nav-link--mobile"
+            onClick={() => setOpen(false)}
+          >
+            Ver por rubro
+          </Link>
         </div>
       </div>
     </header>

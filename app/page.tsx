@@ -1,138 +1,81 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { useCallback } from "react";
 import RevealOnScroll from "../components/RevealOnScroll";
 
 const WHATSAPP_URL = "https://wa.me/549XXXXXXXXXX"; // poné tu número
 
-function Icon({ children }: { children: React.ReactNode }) {
-  return <span className="icon-pill">{children}</span>;
+function useCoinTilt() {
+  return useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = e.currentTarget;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rx = ((y / rect.height) - 0.5) * -10;
+    const ry = ((x / rect.width) - 0.5) * 12;
+
+    el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+  }, []);
+}
+function resetTilt(e: React.MouseEvent<HTMLAnchorElement>) {
+  e.currentTarget.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
 }
 
-function ITrace() {
+/* ===== Icons ===== */
+function IHospitalBig() {
   return (
-    <svg viewBox="0 0 24 24" className="ico" fill="none" aria-hidden="true">
-      <path
-        d="M6 7h12M6 12h9M6 17h7"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <path
-        d="M18.5 14.5l1.7 1.7 3-3"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg viewBox="0 0 24 24" className="coin-ico" fill="none" aria-hidden="true">
+      <path d="M4 20V9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"/>
+      <path d="M9 20v-6h6v6" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"/>
+      <path d="M12 9v4M10 11h4" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"/>
     </svg>
   );
 }
-function IStock() {
+function IInstitucionBig() {
   return (
-    <svg viewBox="0 0 24 24" className="ico" fill="none" aria-hidden="true">
-      <path
-        d="M21 8l-9 5-9-5 9-5 9 5Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M3 8v10l9 5 9-5V8"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 13v10"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
+    <svg viewBox="0 0 24 24" className="coin-ico" fill="none" aria-hidden="true">
+      <path d="M3 10l9-6 9 6" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"/>
+      <path d="M5 10v10h14V10" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"/>
+      <path d="M9 20v-7h6v7" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+function INegocioBig() {
+  return (
+    <svg viewBox="0 0 24 24" className="coin-ico" fill="none" aria-hidden="true">
+      <path d="M4 10V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"/>
+      <path d="M3 10h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10Z" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round"/>
+      <path d="M9 14h6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+/* Small icons */
+function ILink() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+      <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+      <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+    </svg>
+  );
+}
+function IBox() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+      <path d="M21 8l-9 5-9-5 9-5 9 5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+      <path d="M3 8v10l9 5 9-5V8" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
     </svg>
   );
 }
 function IPdf() {
   return (
-    <svg viewBox="0 0 24 24" className="ico" fill="none" aria-hidden="true">
-      <path
-        d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14 3v4h4"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8 12h8M8 15h8"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-function IVoice() {
-  return (
-    <svg viewBox="0 0 24 24" className="ico" fill="none" aria-hidden="true">
-      <path
-        d="M12 14a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M19 11a7 7 0 0 1-14 0"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <path
-        d="M12 18v3"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-function IWarn() {
-  return (
-    <svg viewBox="0 0 24 24" className="ico" fill="none" aria-hidden="true">
-      <path
-        d="M12 3l10 18H2L12 3Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 9v5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <circle cx="12" cy="17" r="1" fill="currentColor" />
-    </svg>
-  );
-}
-function ICost() {
-  return (
-    <svg viewBox="0 0 24 24" className="ico" fill="none" aria-hidden="true">
-      <path
-        d="M12 2v20"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <path
-        d="M16 6.5c0-1.7-1.8-3-4-3s-4 1.3-4 3 1.2 2.7 4 3 4 1.3 4 3-1.8 3-4 3-4-1.3-4-3"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+      <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+      <path d="M14 3v4h4" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+      <path d="M8 12h8M8 15h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
     </svg>
   );
 }
@@ -149,7 +92,7 @@ function FeatureCard({
   return (
     <div className="card surface">
       <div className="card-top">
-        {icon}
+        <span className="icon-pill">{icon}</span>
         <h3 className="card-title">{title}</h3>
       </div>
       <p className="card-desc">{desc}</p>
@@ -157,252 +100,185 @@ function FeatureCard({
   );
 }
 
-function Step({
-  n,
+function Coin({
+  href,
   title,
-  desc,
+  icon,
+  caption,
+  delay,
 }: {
-  n: string;
+  href: string;
   title: string;
-  desc: string;
+  icon: React.ReactNode;
+  caption: string;
+  delay?: number;
 }) {
+  const tilt = useCoinTilt();
+
   return (
-    <div className="step surface">
-      <div className="step-badge">{n}</div>
-      <div className="step-body">
-        <div className="step-title">{title}</div>
-        <div className="step-desc">{desc}</div>
+    <RevealOnScroll delay={delay}>
+      <div className="segment-wrap">
+        <Link
+          href={href}
+          className="coin"
+          onMouseMove={tilt}
+          onMouseLeave={resetTilt}
+          onFocus={(e) =>
+            (e.currentTarget.style.transform =
+              "perspective(900px) rotateX(0deg) rotateY(0deg) translateY(-2px)")
+          }
+          onBlur={(e) =>
+            (e.currentTarget.style.transform =
+              "perspective(900px) rotateX(0deg) rotateY(0deg)")
+          }
+        >
+          <div className="coin-inner">
+            {icon}
+            <div className="coin-title">{title}</div>
+          </div>
+        </Link>
+        <div className="coin-caption">{caption}</div>
       </div>
-    </div>
+    </RevealOnScroll>
   );
 }
 
 export default function Home() {
   return (
     <main>
-      {/* ===== HERO (más cerca del navbar + más aire visual) ===== */}
+      {/* ===== HERO ===== */}
       <section className="hero">
         <div className="container-mysyn hero-inner">
           <RevealOnScroll>
             <div className="hero-center">
-              <div className="mysyn-logo-lockup" aria-label="MYSYN">
-                <Image
-                  src="/22.png"
-                  alt="MYSYN ciclo"
-                  width={520}
-                  height={520}
-                  priority
-                  className="mysyn-logo-ring"
-                />
-                <Image
-                  src="/111.png"
-                  alt="MYSYN"
-                  width={260}
-                  height={260}
-                  priority
-                  className="mysyn-logo-core"
-                />
-              </div>
+              <div className="hero-stack">
+                <div className="mysyn-logo-lockup" aria-label="MYSYN">
+                  <Image
+                    src="/22.png"
+                    alt="MYSYN ciclo"
+                    width={520}
+                    height={520}
+                    priority
+                    className="mysyn-logo-ring"
+                  />
+                  <Image
+                    src="/111.png"
+                    alt="MYSYN"
+                    width={260}
+                    height={260}
+                    priority
+                    className="mysyn-logo-core"
+                  />
+                </div>
 
-              <p className="kicker">
-                GESTIÓN BROMATOLÓGICA · TRAZABILIDAD · STOCK · PRODUCCIÓN
-              </p>
+                <div className="hero-copy">
+                  <p className="kicker">TRAZABILIDAD · STOCK · PRODUCCIÓN · DOCUMENTACIÓN</p>
 
-              <h1 className="h1">
-                Todo bajo control, <span>sin planillas</span>.
-              </h1>
+                  <h1 className="h1">
+                    Control total de alimentos, <span>sin planillas</span>.
+                  </h1>
 
-              <p className="lead">
-                Registrá compras y producción por receta, controlá freezer y calidad, y generá
-                los PDFs que te piden.
-              </p>
+                  {/* ✅ centrado */}
+                  <p className="lead center">
+                    MYSYN registra compras y producción por receta, controla stock (FEFO) y genera
+                    documentación lista para auditorías.
+                  </p>
+                </div>
 
-              <div className="cta-row">
-                <a
-                  className="btn btn-primary"
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Pedir demo
-                </a>
-                <a className="btn btn-ghost" href="#como-funciona">
-                  Cómo funciona
-                </a>
+                <div className="cta-row">
+                  <a className="btn btn-primary" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+                    Pedir demo
+                  </a>
+                  <a className="btn btn-ghost" href="#segmentos">
+                    Ver por rubro
+                  </a>
+                </div>
               </div>
             </div>
           </RevealOnScroll>
         </div>
       </section>
 
-      {/* ===== Beneficios (cards redondas, poco texto, simétrico) ===== */}
+      {/* ===== SEGMENTOS ===== */}
+      <section className="section" id="segmentos">
+        <div className="container-mysyn">
+          <RevealOnScroll>
+            <h2 className="h2 center">Elegí tu rubro</h2>
+          </RevealOnScroll>
+
+          <div className="grid-3 mt">
+            <Coin
+              href="/hospitales"
+              title="Hospitales"
+              icon={<IHospitalBig />}
+              caption="Dietas, porciones, cadena fría y trazabilidad por lote."
+            />
+            <Coin
+              href="/instituciones"
+              title="Instituciones"
+              icon={<IInstitucionBig />}
+              caption="Comedores, escuelas, clubes: stock simple, vencimientos y control."
+              delay={90}
+            />
+            <Coin
+              href="/negocios"
+              title="Negocios"
+              icon={<INegocioBig />}
+              caption="Panaderías, rotiserías, fábricas: recetas, costos y lotes."
+              delay={180}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Qué hace ===== */}
       <section className="section" id="beneficios">
         <div className="container-mysyn">
           <RevealOnScroll>
-            <h2 className="h2 center">Lo que te soluciona</h2>
-            <p className="p center sub">
-              Lo importante, rápido. Lo demás lo ves en la demo.
-            </p>
+            <h2 className="h2 center">Qué hace MYSYN</h2>
           </RevealOnScroll>
 
           <div className="grid-3 mt">
             <RevealOnScroll>
               <FeatureCard
-                icon={
-                  <Icon>
-                    <ITrace />
-                  </Icon>
-                }
+                icon={<ILink />}
                 title="Trazabilidad real"
-                desc="De la harina al producto vendido, por lote."
+                desc="Insumo → producción → producto. Todo queda vinculado."
               />
             </RevealOnScroll>
 
             <RevealOnScroll delay={90}>
               <FeatureCard
-                icon={
-                  <Icon>
-                    <IStock />
-                  </Icon>
-                }
+                icon={<IBox />}
                 title="Stock en vivo"
-                desc="Descuento automático por receta y por gramos."
+                desc="Consumo por receta + FEFO + vencimientos."
               />
             </RevealOnScroll>
 
             <RevealOnScroll delay={180}>
               <FeatureCard
-                icon={
-                  <Icon>
-                    <IPdf />
-                  </Icon>
-                }
-                title="Papeles listos"
-                desc="POES, temperaturas y planillas: en PDF."
+                icon={<IPdf />}
+                title="PDFs listos"
+                desc="Planillas y documentos en un clic."
               />
             </RevealOnScroll>
           </div>
 
-          <div className="grid-3 mt">
-            <RevealOnScroll>
-              <FeatureCard
-                icon={
-                  <Icon>
-                    <IVoice />
-                  </Icon>
-                }
-                title="IA por voz"
-                desc="Cargá producción sin tocar la pantalla."
-              />
-            </RevealOnScroll>
-
-            <RevealOnScroll delay={90}>
-              <FeatureCard
-                icon={
-                  <Icon>
-                    <IWarn />
-                  </Icon>
-                }
-                title="Alertas útiles"
-                desc="Vencimientos, freezer y stock crítico."
-              />
-            </RevealOnScroll>
-
-            <RevealOnScroll delay={180}>
-              <FeatureCard
-                icon={
-                  <Icon>
-                    <ICost />
-                  </Icon>
-                }
-                title="Costo al centavo"
-                desc="Costo real según insumos usados en esa tanda."
-              />
-            </RevealOnScroll>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== Cómo funciona (sin “corte”, fondo suave) ===== */}
-      <section className="section section-soft" id="como-funciona">
-        <div className="container-mysyn">
           <RevealOnScroll>
-            <h2 className="h2 center">Cómo funciona</h2>
-            <p className="p center sub">
-              Registrás el flujo real y MYSYN conecta todo solo.
-            </p>
-          </RevealOnScroll>
-
-          <div className="stepper">
-            <div className="stepper-line" aria-hidden="true" />
-            <RevealOnScroll>
-              <Step n="1" title="Comprás" desc="Lote + vencimiento + costo." />
-            </RevealOnScroll>
-            <RevealOnScroll delay={70}>
-              <Step n="2" title="Producís" desc="Receta → FEFO + P-XXXX." />
-            </RevealOnScroll>
-            <RevealOnScroll delay={140}>
-              <Step n="3" title="Freezer" desc="Sobró → L-XXXX vinculado." />
-            </RevealOnScroll>
-            <RevealOnScroll delay={210}>
-              <Step n="4" title="Terminás" desc="Descuenta exacto en gramos." />
-            </RevealOnScroll>
-            <RevealOnScroll delay={280}>
-              <Step n="5" title="Calidad" desc="Pesos + etiqueta + control." />
-            </RevealOnScroll>
-            <RevealOnScroll delay={350}>
-              <Step n="6" title="Vendés" desc="Baja stock y ajusta desarme." />
-            </RevealOnScroll>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== IA por voz (bloque corto) ===== */}
-      <section className="section" id="ia">
-        <div className="container-mysyn">
-          <RevealOnScroll>
-            <div className="cta surface cta--single">
-              <div className="cta-left">
-                <h2 className="h2">IA por voz en producción</h2>
-                <p className="p">
-                  Ideal cuando estás con las manos ocupadas: dictás y listo.
+            <div className="cta surface" style={{ marginTop: "1.2rem" }}>
+              <div className="cta-left" style={{ textAlign: "center" }}>
+                <h2 className="h2">¿Te muestro una demo con tu caso?</h2>
+                {/* ✅ centrado */}
+                <p className="p center">
+                  Lo armamos con tu flujo real y 2–3 ejemplos concretos.
                 </p>
               </div>
               <div className="cta-right">
-                <a
-                  className="btn btn-outline w-full"
-                  href="#cta"
-                >
-                  Quiero verlo
-                </a>
-              </div>
-            </div>
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      {/* ===== CTA final ===== */}
-      <section className="section" id="cta">
-        <div className="container-mysyn">
-          <RevealOnScroll>
-            <div className="cta surface">
-              <div className="cta-left">
-                <h2 className="h2">¿Te muestro una demo con tu negocio?</h2>
-                <p className="p">
-                  Me decís qué producís y qué planillas te piden, y lo adaptamos a tu flujo.
-                </p>
-              </div>
-              <div className="cta-right">
-                <a
-                  className="btn btn-primary w-full"
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a className="btn btn-primary w-full" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
                   Hablar por WhatsApp
                 </a>
-                <a className="btn btn-outline w-full" href="#beneficios">
-                  Ver beneficios
+                <a className="btn btn-outline w-full" href="#segmentos">
+                  Ver rubros
                 </a>
               </div>
             </div>

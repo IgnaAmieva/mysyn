@@ -40,7 +40,9 @@ export default function RevealOnScroll({
   return (
     <div
       ref={ref}
-      className={`scroll-reveal ${visible ? "scroll-reveal--visible" : ""} ${className}`}
+      className={`scroll-reveal ${
+        visible ? "scroll-reveal--visible" : ""
+      } ${className}`}
       style={visible && delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}

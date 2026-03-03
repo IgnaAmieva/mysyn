@@ -17,7 +17,6 @@ const items = [
 ];
 
 export default function SponsorMarquee() {
-  // duplicamos para loop infinito
   const loop = [...items, ...items];
 
   return (
